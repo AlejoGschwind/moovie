@@ -1,7 +1,7 @@
 import {
   FETCH_MOVIES_REQUEST,
   FETCH_MOVIES_SUCCESS,
-  FETCH_MOVIES_FAILURE
+  FETCH_MOVIES_FAILURE,
 } from "./movie.types";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export const fetchMoviesFailure = (error) => {
   }
 }
 
-export const fetchMovies = (page) => {
+export const fetchMovies = (page = 1) => {
   return async (dispatch) => {
     dispatch(fetchMoviesRequest())
     try {
@@ -36,3 +36,9 @@ export const fetchMovies = (page) => {
     }
   }
 }
+
+// export const fetchMovie = ( id ) => {
+//   return async (dispatch) => {
+
+//   }
+// }

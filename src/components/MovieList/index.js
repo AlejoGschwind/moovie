@@ -1,51 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchMovies } from "../../redux"
+import React from "react";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import MovieItem from "../MovieItem";
+
+const MoviesGrid = styled.section`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 2rem;
+`;
 
 function MovieList() {
-  const dispatch = useDispatch();
-  const { loading, movies, error } = useSelector((state) => state);
+  const { movies } = useSelector((state) => state);
 
-  const [page, setPage] = useState(1);
-
-  const decrementPage = () => {
-    if (page > 1) {
-      setPage( page - 1);
-    }
-  }
-
-  const incrementPage = () => {
-    if (page < movies.total_pages) {
-      setPage( page + 1);
-    }
-  }
-
-  useEffect(() => {
-    dispatch(fetchMovies(page))
-  }, [page])
-
-  if (loading) {
-    return <p>Loading...</p>;
-  } else if (error) {
-    return <p>{error}</p>;
-  } else {
-    return (
-      <div>
-        <h2>Popular movies:</h2>
-        <ul>
-          {movies.results &&
-            movies.results.map((movie) => (
-              <li key={movie.id}>{movie.title}</li>
-            ))}
-        </ul>
-        <div>
-          <button onClick={decrementPage}>Anterior</button>
-          <button disabled={true}>{page}</button>
-          <button onClick={incrementPage}>Siguiente</button>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h2>Popular movies:</h2>
+      <MoviesGrid>
+        {movies &&
+          movies.map((movie) => (
+            <MovieItem
+              key={movie.id}
+              id={movie.id}
+              title={movie.title}
+              posterUrl={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+            />
+          ))}
+      </MoviesGrid>
+    </div>
+  );
 }
 
 export default MovieList;

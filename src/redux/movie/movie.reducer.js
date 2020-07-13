@@ -2,6 +2,9 @@ const { FETCH_MOVIES_REQUEST, FETCH_MOVIES_SUCCESS, FETCH_MOVIES_FAILURE } = req
 
 const initialState = {
   loading: false,
+  total_movies: 0,
+  page: 0,
+  total_pages: 0,
   movies: [],
   error: null,
 };
@@ -18,7 +21,10 @@ const movieReducer = ( state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        movies: action.payload,
+        total_movies: action.payload.total_movies ,
+        page: action.payload.page ,
+        total_pages: action.payload.total_pages,
+        movies: state.movies.concat(action.payload.results),
       }
     
     case FETCH_MOVIES_FAILURE:
