@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchMovieDetail } from "../redux";
 import MovieDetail from "../components/MovieDetail";
 
 function DetailMoviePage(props) {
-  const movies = useSelector((state) => state.movies);
-
-  const [movie, setMovie] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (movies) {
-      const [foundMovie] = movies.filter(movie => movie.id == props.match.params.id);
-      setMovie(foundMovie)
-    } else {
-      
-    }
-  }, [movies])
+    dispatch(fetchMovieDetail(props.match.params.id));
+  }, [props.match.params.id]);
 
-
-  return <div>{movie && <MovieDetail movie={movie}/>}</div>;
+  return <MovieDetail />;
 }
 
 export default DetailMoviePage;

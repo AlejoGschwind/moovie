@@ -10,7 +10,7 @@ const MoviesGrid = styled.section`
 `;
 
 function MovieList() {
-  const { movies } = useSelector((state) => state);
+  const { movies } = useSelector((state) => state.moviesList);
 
   return (
     <div>

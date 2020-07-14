@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const MovieDetailWrapper = styled.article`
@@ -13,18 +14,28 @@ const Hero = styled.div`
   background: #323232;
   background-image: url(${(props) => props.background});
   background-size: cover;
-  background-position: center;
+  background-position: top;
 `;
 
-function MovieDetail({ movie: { title, backdrop_path, overview, release_date } }) {
+function MovieDetail() {
+  const { movie, loading } = useSelector((state) => state.movieDetail);
+
+  if (loading) {
+    return "Loading...";
+  }
+
   return (
     <MovieDetailWrapper>
-      <Hero
-        background={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
-      />
-      <h1>{title}</h1>
-      <p>{overview}</p>
-      <span>{release_date}</span>
+      {movie ? (
+        <>
+          <Hero
+            background={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+          />
+          <h1>{movie.title}</h1>
+          <p>{movie.overview}</p>
+          <span>{movie.release_date}</span>
+        </>
+      ) : <p>Not Found</p>}
     </MovieDetailWrapper>
   );
 }

@@ -13,7 +13,7 @@ function MoviesInfiniteScroll() {
     total_pages,
     total_movies,
     error,
-  } = useSelector((state) => state);
+  } = useSelector((state) => state.moviesList);
 
 
   const fetchNextPage = () => {
